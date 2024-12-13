@@ -144,9 +144,19 @@
 
         <Button
             android:id="@+id/buttonRegister"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            app:cornerRadius="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register"/>
+            android:layout_margin="15dp"
+            android:layout_marginTop="25dp"
+            android:paddingHorizontal="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/green"
+
+            android:text="Register" />
 
     </LinearLayout>
 </ScrollView>

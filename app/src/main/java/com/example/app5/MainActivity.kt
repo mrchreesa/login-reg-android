@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
+import at.favre.lib.crypto.bcrypt.BCrypt
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,11 +37,16 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPref = getSharedPreferences("UserData", Context.MODE_PRIVATE)
         val storedUsername = sharedPref.getString("username", "")
-        val storedPassword = sharedPref.getString("password", "")
+        val storedHashedPassword = sharedPref.getString("password", "")
 
-        if (username == storedUsername && password == storedPassword) {
-            Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-            navigateToUserProfile()
+        if (username == storedUsername && storedHashedPassword != null) {
+            val result = BCrypt.verifyer().verify(password.toCharArray(), storedHashedPassword)
+            if (result.verified) {
+                Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                navigateToUserProfile()
+            } else {
+                Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show()
+            }
         } else {
             Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show()
         }
